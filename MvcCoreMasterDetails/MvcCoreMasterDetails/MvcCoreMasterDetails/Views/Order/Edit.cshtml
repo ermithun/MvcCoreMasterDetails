@@ -1,0 +1,150 @@
+﻿@model MvcCoreMasterDetails.Models.OrderMgmt.ViewModels.OrderMastViewModel
+@{
+    Layout = "_Layout";
+}
+<h4>OrderMast</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="OrderDate" class="control-label"></label>
+                <input asp-for="OrderDate" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div>
+            <div class="wrapDetail table-responsive col-md-12">
+                <table class="table table-bordered tablesorter-blue" id="detail_table">
+                    <thead class="md-default">
+                        <tr>
+                            <th class="col-md-3 ze-center sorter-false">
+                                Product Name
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Qty
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Rate
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Amount
+                            </th>
+                            <th class="col-sm-1 ze-center sorter-false">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 0;
+                            foreach (var item in Model.OrderDetlViewModel)
+                            {
+                                var amount = item.Qty * item.Rate;
+                                <tr>
+                                    <td>
+                                        <input type="text" name="OrderDetlViewModel[@i].Id" value="@item.Id" class="input-sm form-control hidden ze-id" readonly="readonly" />
+                                        <input type="text" name="OrderDetlViewModel[@i].MastId" value="@item.MastId" class="input-sm form-control hidden" readonly="readonly" />
+                                        <input type="text" name="OrderDetlViewModel[@i].Flag" value="0" class="input-sm form-control ze-flag hidden" readonly="readonly" />
+                                        <input type="text" name="OrderDetlViewModel[@i].ProductName" value="@item.ProductName" class="input-sm form-control" readonly="readonly" />
+                                    </td>
+                                    <td>
+                                        <input  name="OrderDetlViewModel[@i].Qty" value="@item.Qty" class="form-control input-sm  text-right" maxlength="5" autocomplete="off" readonly="readonly" />
+                                    </td>
+                                    <td>
+                                        <input  name="OrderDetlViewModel[@i].Rate" value="@item.Rate" class="form-control input-sm  text-right" autocomplete="off" readonly="readonly" />
+                                    </td>
+                                    <td>
+
+                                        <input  name="OrderDetlViewModel[@i].Amount" value="@amount" class="form-control input-sm ze-decimal text-right" readonly="readonly" />
+                                    </td>
+                                    <td>
+                                        <a class="table-action-nav-btn btn btn-sm btn-delete" title="Delete">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td>
+                                <input type="text" id="ProductName" class="input-sm form-control" />
+                            </td>
+                            <td>
+                                <input id="Qty" onchange="CalculateAmount()" class="form-control input-sm  text-right" maxlength="5" autocomplete="off" />
+                            </td>
+                            <td>
+                                <input id="Rate" onchange="CalculateAmount()" class="form-control input-sm  text-right" autocomplete="off" />
+                            </td>
+                            <td>
+                                <input id="Amount" class="form-control input-sm ze-decimal text-right" readonly="readonly" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn" id="btn-add" data-target="">Add</button>
+                                <button type="button" class="btn " id="btn-clear">clear</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script type="text/javascript">
+    var $table = $('#detail_table>tbody');
+    function Addrow(index) {
+        var addtr = '<tr>\
+                        <td>\
+            <input value="0" name="OrderDetlViewModel[' + index + '].Id" class="form-control input-sm hidden ze-id" type="text" readonly="readonly"/>\
+            <input value="0" name="OrderDetlViewModel[' + index + '].MastId" class="form-control hidden input-sm" type="text" readonly="readonly"/>\
+                            <input value="' + $('#ProductName').val() + '" name="OrderDetlViewModel[' + index + '].ProductName" class="form-control input-sm" type="text" readonly="readonly"/>\
+                            <input value="0" name="OrderDetlViewModel[' + index + '].Flag" class="form-control hidden input-sm ze-flag" type="hidden" readonly="readonly"/>\
+                            </td>\
+                        <td><input value="' + $('#Qty').val() + '" name="OrderDetlViewModel[' + index + '].Qty" class="text-bold form-control input-sm ze-number grid-input-qty text-right" autocomplete="off" readonly=readonly /></td>\
+                        <td><input value="' + parseFloat($('#Rate').val()).toFixed(2) + '" name="OrderDetlViewModel[' + index + '].Rate" class="text-bold form-control input-sm ze-decimal grid-input-rate text-right" readonly="readonly"/></td>\
+                        <td><input value="' + parseFloat($('#Amount').val()).toFixed(2) + '" name="OrderDetlViewModel[' + index + '].Amount" class="text-bold form-control input-sm ze-decimal grid-input-amount text-right amount" readonly="readonly"/></td>\
+                        <td><a class="table-action-nav-btn btn btn-sm btn-delete" title="Delete">Delete</a>\
+                    </tr>\ ';
+        return addtr;
+    }
+
+    function CalculateAmount() {
+        $('#Amount').val(parseFloat($('#Qty').val() * $('#Rate').val()).toFixed(2));
+    };
+
+    $('#btn-add').click(function () {
+        debugger;
+        $this = $(this);
+        var index = parseInt($table.find('tr').length) - 1;
+        var addtr = Addrow(index);
+        $table.find('tr:eq(' + index + ')').before(addtr);
+        $this.closest('tr').find(':input').each(function () {
+            $(this).val('');
+        });
+    });
+
+    $table.on('click', '.btn-delete', function () {
+        $this = $(this);
+        if ($this.closest('tr').find('.ze-id').val() > 0) {
+            $this.closest('tr').find('.ze-flag').val(1);
+            $this.closest('tr').hide();
+        }
+        else { 
+            $this.closest('tr').remove();
+        }
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

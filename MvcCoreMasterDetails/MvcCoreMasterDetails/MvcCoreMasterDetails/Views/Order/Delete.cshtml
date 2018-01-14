@@ -1,0 +1,87 @@
+﻿@model MvcCoreMasterDetails.Models.OrderMgmt.ViewModels.OrderMastViewModel
+@{
+    Layout = "_Layout";
+}
+<h4>OrderMast</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+       
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group col-md-4">
+               
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="OrderDate" class="control-label"></label>
+                <input asp-for="OrderDate" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div>
+            <div class="wrapDetail table-responsive col-md-12">
+                <table class="table table-bordered tablesorter-blue" id="detail_table">
+                    <thead class="md-default">
+                        <tr>
+                            <th class="col-md-3 ze-center sorter-false">
+                                Product Name
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Qty
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Rate
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Amount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in Model.OrderDetlViewModel)
+                            {
+                                var amount = item.Qty * item.Rate;
+                                <tr>
+                                    <td>
+                                        <input type="text" id="ProductName" value="@item.ProductName" class="input-sm form-control" readonly="readonly" />
+                                    </td>
+                                    <td>
+                                        <input id="Qty" value="@item.Qty" class="form-control input-sm  text-right" maxlength="5" autocomplete="off" readonly="readonly" />
+                                    </td>
+                                    <td>
+                                        <input id="Rate" value="@item.Rate" class="form-control input-sm  text-right" autocomplete="off" readonly="readonly" />
+                                    </td>
+                                    <td>
+
+                                        <input id="Amount" value="@amount" class="form-control input-sm ze-decimal text-right" readonly="readonly" />
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+
+        <form asp-action="Delete">
+            <input asp-for="Id" type="hidden" />
+
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </div>
+        </form>
+
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

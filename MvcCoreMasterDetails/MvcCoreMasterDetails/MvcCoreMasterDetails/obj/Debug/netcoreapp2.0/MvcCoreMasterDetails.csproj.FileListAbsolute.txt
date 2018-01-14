@@ -1,0 +1,12 @@
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\bin\Debug\netcoreapp2.0\MvcCoreMasterDetails.deps.json
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\bin\Debug\netcoreapp2.0\MvcCoreMasterDetails.runtimeconfig.json
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\bin\Debug\netcoreapp2.0\MvcCoreMasterDetails.runtimeconfig.dev.json
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\bin\Debug\netcoreapp2.0\MvcCoreMasterDetails.dll
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\bin\Debug\netcoreapp2.0\MvcCoreMasterDetails.pdb
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\obj\Debug\netcoreapp2.0\MvcCoreMasterDetails.csprojResolveAssemblyReference.cache
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\obj\Debug\netcoreapp2.0\MvcCoreMasterDetails.csproj.CoreCompileInputs.cache
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\obj\Debug\netcoreapp2.0\MvcCoreMasterDetails.AssemblyInfoInputs.cache
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\obj\Debug\netcoreapp2.0\MvcCoreMasterDetails.AssemblyInfo.cs
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\obj\Debug\netcoreapp2.0\MvcCoreMasterDetails.dll
+c:\users\mithun\source\repos\MvcCoreMasterDetails\MvcCoreMasterDetails\obj\Debug\netcoreapp2.0\MvcCoreMasterDetails.pdb

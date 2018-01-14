@@ -1,0 +1,114 @@
+﻿@model MvcCoreMasterDetails.Models.OrderMgmt.ViewModels.OrderMastViewModel
+@{
+    Layout = "_Layout";
+}
+<h4>OrderMast</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="OrderDate" class="control-label"></label>
+                <input asp-for="OrderDate" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div>
+            <div class="wrapDetail table-responsive col-md-12">
+                <table class="table table-bordered tablesorter-blue" id="detail_table">
+                    <thead class="md-default">
+                        <tr>
+                            <th class="col-md-3 ze-center sorter-false">
+                                Product Name
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Qty
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Rate
+                            </th>
+                            <th class="col-md-1 ze-center sorter-false">
+                                Amount
+                            </th>
+                            <th class="col-sm-1 ze-center sorter-false">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" id="ProductName" class="input-sm form-control" />
+                            </td>
+                            <td>
+                                <input id="Qty" onchange="CalculateAmount()" class="form-control input-sm  text-right" maxlength="5" autocomplete="off" />
+                            </td>
+                            <td>
+                                <input id="Rate" onchange="CalculateAmount()" class="form-control input-sm  text-right" autocomplete="off" />
+                            </td>
+                            <td>
+                                <input id="Amount" class="form-control input-sm ze-decimal text-right" readonly="readonly" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn" id="btn-add" data-target="">Add</button>
+                                <button type="button" class="btn " id="btn-clear">clear</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script type="text/javascript">
+    var $table = $('#detail_table>tbody');
+    function Addrow(index) {
+        var addtr = '<tr>\
+                        <td>\
+                            <input value="' + $('#ProductName').val() + '" name="OrderDetlViewModel[' + index + '].ProductName" class="form-control input-sm" type="text" readonly="readonly"/>\
+                            <input value="0" name="OrderDetlViewModel[' + index + '].Flag" class="form-control input-sm" type="hidden" readonly="readonly"/>\
+                            </td>\
+                        <td><input value="' + $('#Qty').val() + '" name="OrderDetlViewModel[' + index + '].Qty" class="text-bold form-control input-sm ze-number grid-input-qty text-right" autocomplete="off" readonly=readonly /></td>\
+                        <td><input value="' + parseFloat($('#Rate').val()).toFixed(2) + '" name="OrderDetlViewModel[' + index + '].Rate" class="text-bold form-control input-sm ze-decimal grid-input-rate text-right" readonly="readonly"/></td>\
+                        <td><input value="' + parseFloat($('#Amount').val()).toFixed(2) + '" name="OrderDetlViewModel[' + index + '].Amount" class="text-bold form-control input-sm ze-decimal grid-input-amount text-right amount" readonly="readonly"/></td>\
+                        <td><a class="table-action-nav-btn btn btn-sm btn-delete" title="Delete">Delete</a>\
+                    </tr>\ ';
+        return addtr;
+    }
+
+    function CalculateAmount() {
+        $('#Amount').val(parseFloat($('#Qty').val() * $('#Rate').val()).toFixed(2));
+    };
+
+    $('#btn-add').click(function () {
+        debugger;
+        $this = $(this);
+        var index = parseInt($table.find('tr').length) - 1;
+        var addtr = Addrow(index);
+        $table.find('tr:eq(' + index + ')').before(addtr);
+        $this.closest('tr').find(':input').each(function () {
+            $(this).val('');
+        });
+    });
+
+    $table.on('click', '.btn-delete', function () {
+        $this = $(this);
+        $this.closest('tr').remove();
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
